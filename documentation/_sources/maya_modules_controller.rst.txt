@@ -1,0 +1,17 @@
+Maya Modules Controller API
+++++++++++++++++++++++++++++
+
+.. automodule:: maya_modules_controller
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Modules
+   
+   maya_modules_controller.core
+   maya_modules_controller.main
+   maya_modules_controller.ui
+
+

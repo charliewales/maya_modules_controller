@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>maya_modules_controller.main &mdash; Maya Modules Controller 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Maya Modules Controller 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="maya_modules_controller" href="../maya_modules_controller.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Maya Modules Controller
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maya_modules_controller.html">Maya Modules Controller API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Maya Modules Controller</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../maya_modules_controller.html">maya_modules_controller</a> &raquo;</li>
+        
+      <li>maya_modules_controller.main</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for maya_modules_controller.main</h1><div class="highlight"><pre>
+<span></span>
+<span class="sd">&quot;&quot;&quot; Maya Modules Controller Main</span>
+<span class="sd">:module: maya_modules_controller.main</span>
+
+<span class="sd">*Module description*</span>
+
+<span class="sd">:author: Jerome Drese</span>
+<span class="sd">:date: 16 Jun 2017</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Imports</span>
+<span class="kn">from</span> <span class="nn">PySide2</span> <span class="k">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># Maya Modules Controller imports</span>
+<span class="kn">import</span> <span class="nn">maya_modules_controller.core</span>
+<span class="kn">import</span> <span class="nn">maya_modules_controller.ui</span>
+
+
+<div class="viewcode-block" id="MayaModulesController"><a class="viewcode-back" href="../../maya_modules_controller.main.html#maya_modules_controller.main.MayaModulesController">[docs]</a><span class="k">class</span> <span class="nc">MayaModulesController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Maya_Modules_Controller initialization setup.</span>
+
+<span class="sd">    Setup the tool and its user interface.</span>
+
+<span class="sd">    :param parent: The parent arguments can be use to give the UI a parent</span>
+<span class="sd">                widget. When using this tool inside Maya you can pass</span>
+<span class="sd">                to the parent argument Maya&#39;s window in a wrapped widget.</span>
+<span class="sd">    :type parent: QtWidget</span>
+
+<span class="sd">    **Example:**</span>
+
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">        :linenos:</span>
+
+<span class="sd">        maya_window = maya.OpenMayaUI.MQtUtil.mainWindow()</span>
+<span class="sd">        MayaModulesController(shiboken2.wrapInstance(long(maya_window), QtWidgets.QDialog))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Initialize the view and setups the ui. &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">MayaModulesController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># Protected variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__modules_list</span> <span class="o">=</span> <span class="n">maya_modules_controller</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">get_list_modules</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__modules_model</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStringListModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__proxy_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__qsort_filter_proxy_model</span><span class="p">()</span>
+
+        <span class="c1"># Initialize the UI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize_ui</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="c1"># Connects signals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">delete_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delete_modules</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_modules</span><span class="p">)</span>
+
+        <span class="c1"># Sets string thing model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">string_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proxy_model</span><span class="o">.</span><span class="n">setSourceModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string_model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list_view</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proxy_model</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__qsort_filter_proxy_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Creates and setups a QSortFilterProxyModel that will recieve the</span>
+<span class="sd">        QStringListModel. &quot;&quot;&quot;</span>
+
+        <span class="n">_proxy</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSortFilterProxyModel</span><span class="p">()</span>
+        <span class="n">_proxy</span><span class="o">.</span><span class="n">setFilterCaseSensitivity</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CaseInsensitive</span><span class="p">)</span>
+        <span class="n">_proxy</span><span class="o">.</span><span class="n">setDynamicSortFilter</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_proxy</span>
+
+<div class="viewcode-block" id="MayaModulesController.close"><a class="viewcode-back" href="../../maya_modules_controller.main.html#maya_modules_controller.main.MayaModulesController.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Closes the user interface. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MayaModulesController.delete_modules"><a class="viewcode-back" href="../../maya_modules_controller.main.html#maya_modules_controller.main.MayaModulesController.delete_modules">[docs]</a>    <span class="k">def</span> <span class="nf">delete_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Deletes modules.</span>
+
+<span class="sd">        If not modules are been passed to the modules argument this functions</span>
+<span class="sd">        queries the selected modules on the UI list in order to delete them.</span>
+
+<span class="sd">        :param modules: List of modules you want to delete.</span>
+<span class="sd">        :type modules: [string]</span>
+
+<span class="sd">        :return: Modules correctly deleted, Modules that failed to be deleted.</span>
+<span class="sd">        :rtype: *[string], [string]*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Queries selected modules on the UI.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">modules</span><span class="p">:</span>
+            <span class="n">modules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selected_modules</span><span class="p">()</span>
+
+        <span class="c1"># Deletes the modules.</span>
+        <span class="n">m_sucess</span><span class="p">,</span> <span class="n">m_failed</span> <span class="o">=</span> <span class="n">maya_modules_controller</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">delete_module</span><span class="p">(</span>
+                                                            <span class="n">modules</span><span class="p">)</span>
+
+        <span class="c1"># If they are failed modules that couln&#39;t be removed then remove those</span>
+        <span class="c1"># from the list remove update.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">m_failed</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: module could not be deleted&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">modules</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="c1"># Removes modules from the UI list.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_model</span><span class="o">.</span><span class="n">stringList</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">string_model</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: module deleted&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">m_sucess</span><span class="p">,</span> <span class="n">m_failed</span></div>
+
+<div class="viewcode-block" id="MayaModulesController.filter_modules"><a class="viewcode-back" href="../../maya_modules_controller.main.html#maya_modules_controller.main.MayaModulesController.filter_modules">[docs]</a>    <span class="k">def</span> <span class="nf">filter_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Filters the proxy_model.</span>
+
+<span class="sd">        You can use this to filter the view to only the elements containing the</span>
+<span class="sd">        given text. If not text is provided it queries the one been taped in</span>
+<span class="sd">        the line_edit widget</span>
+
+<span class="sd">        :param text: String that you want to use as filter.</span>
+<span class="sd">        :type text: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">proxy_model</span><span class="o">.</span><span class="n">setFilterRegExp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MayaModulesController.get_selected_modules"><a class="viewcode-back" href="../../maya_modules_controller.main.html#maya_modules_controller.main.MayaModulesController.get_selected_modules">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Modules selected from the UI list.</span>
+
+<span class="sd">        :return: Selected modules.</span>
+<span class="sd">        :rtype: *[string]*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">selected_modules</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Gets the string value from the index returned by the view</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">list_view</span><span class="o">.</span><span class="n">selectedIndexes</span><span class="p">():</span>
+            <span class="n">selected_modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">selected_modules</span></div>
+
+<div class="viewcode-block" id="MayaModulesController.initialize_ui"><a class="viewcode-back" href="../../maya_modules_controller.main.html#maya_modules_controller.main.MayaModulesController.initialize_ui">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">initialize_ui</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Instance of the MayaModulesControllerUI object. &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">maya_modules_controller</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">MayaModulesControllerUI</span><span class="p">(</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">modules_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Current Python modules list been used.</span>
+
+<span class="sd">        You can use it to apply a new list of modules to the view.</span>
+<span class="sd">        **Example:**</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">            :linenos:</span>
+
+<span class="sd">            controller = MayaModulesController()</span>
+<span class="sd">            controller.modules_list = [&#39;your_module&#39;, &#39;another_module&#39;]</span>
+
+<span class="sd">        :return: Python modules loaded.</span>
+<span class="sd">        :rtype: *[string]*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__modules_list</span>
+
+    <span class="nd">@modules_list</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">modules_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modules_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; modules_list property setter.</span>
+
+<span class="sd">        :param modules_list: String list of Python modules.</span>
+<span class="sd">        :type modules_list: [string]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Refreshing...&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__modules_list</span> <span class="o">=</span> <span class="n">modules_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modules_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules_list</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">modules_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Instance of the ModulesListModel object.</span>
+
+<span class="sd">        This model inherist from the QAbstractListModel.</span>
+
+<span class="sd">        :return: Instance of the ModulesListModel class object.</span>
+<span class="sd">        :rtype: *QAbstractListModel*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__modules_model</span>
+
+    <span class="nd">@modules_model</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">modules_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modules_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; modules_model property setter.</span>
+
+<span class="sd">        :param modules_list: String list of Python modules.</span>
+<span class="sd">        :type modules_list: [string]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__modules_model</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QStringListModel</span><span class="p">(</span><span class="n">modules_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">string_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proxy_model</span><span class="o">.</span><span class="n">setSourceModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules_model</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">proxy_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Proxy Model is a QSortFilterProxyModel that is applied to the view.</span>
+
+<span class="sd">        You can use the proxy_model to set some custom behavior to the view.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__proxy_model</span>
+
+<div class="viewcode-block" id="MayaModulesController.refresh"><a class="viewcode-back" href="../../maya_modules_controller.main.html#maya_modules_controller.main.MayaModulesController.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; **Refrehes the modules list.**</span>
+
+<span class="sd">        Refresh will check if a filter has been applied to the tool and refresh</span>
+<span class="sd">        the modules list within that filter.</span>
+
+<span class="sd">        If no filter has been applied to the modules list refresh will query</span>
+<span class="sd">        all modules been loaded back from sys.modules</span>
+
+<span class="sd">        .. todo:: Needs to handle a refresh with filter already set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modules_list</span> <span class="o">=</span> <span class="n">maya_modules_controller</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">get_list_modules</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MayaModulesController.show"><a class="viewcode-back" href="../../maya_modules_controller.main.html#maya_modules_controller.main.MayaModulesController.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Displays the user interface. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jerome Drese.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
