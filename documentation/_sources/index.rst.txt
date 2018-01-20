@@ -1,0 +1,25 @@
+
+Maya Modules Controller 1.0
++++++++++++++++++++++++++++
+
+Maya Modules Controller is a simple tool that allows you to delete **python**
+modules loaded inside your *Maya* session.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Documentation
+   
+   quickstart
+   maya_modules_controller
+
+
+.. note:: Maya Modules Controller was created to demonstrate how to use Sphinx \
+ an Python auto documentation.
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

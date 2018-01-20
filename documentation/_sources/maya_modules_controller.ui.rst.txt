@@ -1,0 +1,7 @@
+maya\_modules\_controller\.ui
++++++++++++++++++++++++++++++
+
+.. automodule:: maya_modules_controller.ui
+    :members:
+    :undoc-members:
+    :show-inheritance:
