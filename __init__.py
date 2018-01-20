@@ -4,9 +4,9 @@
 *Modules Controller allows user to quickly remove user specific
 modules already loaded.*
 
-:module: 'rigging.maya_modules_controller.__init__'
-:author: Jerome Drese
-:date: 26 May 2017
+:module: 'maya_modules_controller.__init__'
+:platform: Unix, Windows
+
 
 .. note:: You can use this to launch the tool.
 
@@ -15,21 +15,24 @@ modules already loaded.*
           * Add filter feature.
           * Apply CSS style.
 
+:author: Jerome Drese <jeromed@nwavedigital.com>
+:date: 26 May 2017
 """
 
 # Imports
-from PySide2 import QtWidgets
 import logging
-import maya.OpenMayaUI
-import maya.cmds
-import shiboken2
 import sys
 
-# Maya Modules Controller imports
+from PySide2 import QtWidgets
+import maya.cmds
+import shiboken2
+
+import maya.OpenMayaUI
 import maya_modules_controller.main
 import maya_modules_controller.ui
 
 
+# Maya Modules Controller imports
 def run(mode):
     """ Runs the tool.
 
